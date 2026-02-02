@@ -51,6 +51,24 @@ namespace sudoku
             boxes[boxIdx] |= bit;
         }
 
+        public void UpdateEmptyCellsList()
+        {
+            EmptyCells.Clear();
+            for (int row = 0; row < Size; row++)
+            {
+                for (int col = 0; col < Size; col++)
+                {
+                    if (board[row, col] == EmptyCell)
+                        EmptyCells.Add((row, col));
+                }
+            }
+        }
+
+        public bool IsEmpty(int row, int col)
+        {
+            return board[row, col] == EmptyCell;
+        }
+
         public int GetValidMoves(int row, int col)
         {
             int used = rows[row] | cols[col] | boxes[GetBoxIndex(row, col)];
@@ -81,6 +99,32 @@ namespace sudoku
             cols[col] &= ~bit;
             boxes[GetBoxIndex(row, col)] &= ~bit;
             board[row, col] = EmptyCell;
+        }
+
+        public IEnumerable<(int row, int col)> GetRowCells(int row)
+        {
+            for (int col = 0; col < Size; col++)
+                yield return (row, col);
+        }
+
+        public IEnumerable<(int row, int col)> GetColCells(int col)
+        {
+            for (int row = 0; row < Size; row++)
+                yield return (row, col);
+        }
+
+        public IEnumerable<(int row, int col)> GetBoxCells(int boxIndex)
+        {
+            int startRow = (boxIndex / BlockSize) * BlockSize;
+            int startCol = (boxIndex % BlockSize) * BlockSize;
+
+            for (int row = 0; row < BlockSize; row++)
+            {
+                for (int col = 0; col < BlockSize; col++)
+                {
+                    yield return (startRow + row, startCol + col);
+                }
+            }
         }
 
         public void PrintBoard()
