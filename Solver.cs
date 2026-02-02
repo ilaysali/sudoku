@@ -9,6 +9,11 @@ namespace sudoku
 {
     public static class Solver
     {
+        public static bool Solve(SudokuBoard board)
+        {
+            return BackTracking(board, 0);
+        }
+
         private static bool BackTracking(SudokuBoard board, int index)
         {
             if (index >= board.EmptyCells.Count)
