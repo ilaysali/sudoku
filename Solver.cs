@@ -18,7 +18,8 @@ namespace sudoku
         {
             if (index >= board.EmptyCells.Count)
                 return true;
-
+            // swap to the cell with the minimum remaining values
+            MRV(board, index);
 
             var (row, col) = board.EmptyCells[index];
             int moves = board.GetValidMoves(row, col);
@@ -37,6 +38,36 @@ namespace sudoku
                 moves &= ~move; // Remove the bit we just tried
             }
             return false;
+        }
+        public static void MRV(SudokuBoard board, int index)
+        {
+            // Look ahead in the list to find the cell with the fewest moves
+            int bestIndex = index;
+            int minMoves = Size;
+
+            for (int i = index; i < board.EmptyCells.Count; i++)
+            {
+                var (row, col) = board.EmptyCells[i];
+                int count = board.GetValidMovesCount(row, col);
+
+                // If any cell has 0 moves, this path is dead immediately
+                if (count == 0) break;
+
+                if (count < minMoves)
+                {
+                    minMoves = count;
+                    bestIndex = i;
+                    if (minMoves == 1) break; // Can't get better than 1
+                }
+            }
+
+            // Swap the best cell to the current index position
+            if (bestIndex != index)
+            {
+                var temp = board.EmptyCells[index];
+                board.EmptyCells[index] = board.EmptyCells[bestIndex];
+                board.EmptyCells[bestIndex] = temp;
+            }
         }
     }
 }

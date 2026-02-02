@@ -58,6 +58,11 @@ namespace sudoku
             return ((1 << Size) - 1) & validMoves;
         }
 
+        public int GetValidMovesCount(int row, int col)
+        {
+            return BitOperations.PopCount((uint)GetValidMoves(row, col));
+        }
+
         public int GetBoxIndex(int row, int col)
         {
             return (row / BlockSize) * BlockSize + (col / BlockSize);
