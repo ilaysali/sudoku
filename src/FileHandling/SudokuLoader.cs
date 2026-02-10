@@ -1,5 +1,6 @@
 ﻿using sudoku.src.Algorithms;
 using sudoku.src.GameModel;
+using sudoku.src.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,8 +19,7 @@ namespace sudoku.src.FileHandling
 
             if (!File.Exists(filePath))
             {
-                Console.WriteLine($"Error: Could not find file at {filePath}");
-                return;
+                throw new SudokuFileNotFoundException($"Error: Could not find file at {filePath}");
             }
 
             Console.WriteLine($"\nLoading and solving: {fileName}");

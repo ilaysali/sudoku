@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static sudoku.src.GameModel.Constants;
 using static sudoku.src.Algorithms.Solver;
+using sudoku.src.Exceptions;
 
 namespace sudoku.src.UI
 {
@@ -18,7 +19,7 @@ namespace sudoku.src.UI
             string initialBoard = Console.ReadLine() ?? string.Empty;
             Size = (int)Math.Sqrt(initialBoard.Length);
             if (initialBoard.Length != Size * Size)
-                throw new ArgumentException("Invalid board input length.");
+                throw new InvalidUserInputException("Invalid board input length.");
 
             int[,] Board = new int[Size, Size];
             for (int i = 0; i < Size; i++)
@@ -28,7 +29,7 @@ namespace sudoku.src.UI
                     char c = initialBoard[i * Size + j];
 
                     if (!char.IsLetter(c) && !char.IsDigit(c))
-                        throw new ArgumentException("Invalid board input character.");
+                        throw new InvalidUserInputException("Invalid board input character.");
 
                     Board[i, j] = ConvertCharToInt(char.ToLower(c));
                 }
@@ -38,7 +39,7 @@ namespace sudoku.src.UI
 
             sudokuBoard.PrintBoard();
             if (!Solve(sudokuBoard))
-                throw new ArgumentException("Invalid board UNSOLVABLE!!!.");
+                throw new UnsolvableBoardException("Invalid board UNSOLVABLE!!!.");
             sudokuBoard.PrintBoard();
             sw.Stop();
             Console.WriteLine(sw.Elapsed.ToString());
