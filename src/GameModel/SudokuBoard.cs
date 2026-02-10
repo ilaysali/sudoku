@@ -1,6 +1,5 @@
 ﻿using sudoku.src.UI;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
 using static sudoku.src.GameModel.Constants;
 
