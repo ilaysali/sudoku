@@ -21,8 +21,8 @@ namespace sudoku.src
             else
             {
                 var bench = new SudokuLoader();
-                bench.Run("top95.txt");
-                bench.Run("sudoku.csv", 100000);
+                bench.Run("data/top95.txt");
+                bench.Run("data/sudoku.csv", 100000);
             }
             Console.ReadLine();
         }
