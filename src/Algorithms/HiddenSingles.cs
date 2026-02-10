@@ -1,6 +1,7 @@
-﻿using sudoku.src.GameModel;
+﻿using sudoku.src.Exceptions;
+using sudoku.src.GameModel;
+using sudoku.src.Utils;
 using System;
-using System.Drawing;
 using System.Numerics;
 
 
@@ -38,11 +39,11 @@ namespace sudoku.src.Algorithms
                 int moves = board.GetValidMoves(row, col);
                 while (moves > 0)
                 {
-                    int bit = moves & -moves;
-                    int num = BitOperations.TrailingZeroCount(bit) + 1;
+                    int bit = BitOperation.GetLowestSetBit(moves);
+                    int num = BitOperation.ToDigit(bit);
                     counts[num]++;
                     lastPos[num] = (row, col);
-                    moves &= ~bit;
+                    moves = BitOperation.RemoveBit(moves, bit);
                 }
             }
 
@@ -56,6 +57,10 @@ namespace sudoku.src.Algorithms
                     {
                         board.PlaceNumber(row, col, num);
                         localChange = true;
+                    }
+                    else
+                    {
+                        throw new CellOccupiedException($"cell ({row}, {col}) already occupied");
                     }
                 }
             }

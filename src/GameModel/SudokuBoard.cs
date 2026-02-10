@@ -1,7 +1,9 @@
-﻿using sudoku.src.UI;
+﻿using sudoku.src.Exceptions;
+using sudoku.src.UI;
 using System;
 using System.Numerics;
 using static sudoku.src.GameModel.Constants;
+using sudoku.src.Utils;
 
 namespace sudoku.src.GameModel
 {
@@ -29,7 +31,7 @@ namespace sudoku.src.GameModel
                 {
                     if (board[row, col] != 0)
                     {
-                        UpdateInternal(row, col, board[row,col]);
+                        UpdateInternalBoard(row, col, board[row,col], true);
                     }
                     else
                     {
@@ -39,16 +41,24 @@ namespace sudoku.src.GameModel
             }
         }
 
-        private void UpdateInternal(int row, int col, int num)
+        private void UpdateInternalBoard(int row, int col, int num, bool enable)
         {
-            int bit = 1 << num - 1;
+            int bit = BitOperation.FromDigit(num);
             int boxIdx = GetBoxIndex(row, col);
-            if ((rows[row] & bit) != 0 || (cols[col] & bit) != 0 || (boxes[boxIdx] & bit) != 0)
-                throw new ArgumentException("Invalid board input: same number in row/col/box.");
-
-            rows[row] |= bit;
-            cols[col] |= bit;
-            boxes[boxIdx] |= bit;
+            if (enable)
+            {
+                // Add the bit for the number in the corresponding row, column, and box
+                rows[row] |= bit;
+                cols[col] |= bit;
+                boxes[boxIdx] |= bit;
+            }
+            else
+            {
+                // Remove the bit for the number in the corresponding row, column, and box
+                rows[row] &= ~bit;
+                cols[col] &= ~bit;
+                boxes[boxIdx] &= ~bit;
+            }
         }
 
         public void UpdateEmptyCellsList()
@@ -71,14 +81,15 @@ namespace sudoku.src.GameModel
 
         public int GetValidMoves(int row, int col)
         {
+            int fullMask = BitOperation.FullMask(Size);
             int used = rows[row] | cols[col] | boxes[GetBoxIndex(row, col)];
             int validMoves = ~used & ~forbidden[row, col];
-            return (1 << Size) - 1 & validMoves;
+            return fullMask & validMoves;
         }
 
         public int GetValidMovesCount(int row, int col)
         {
-            return BitOperations.PopCount((uint)GetValidMoves(row, col));
+            return BitOperation.CountSetBits(GetValidMoves(row, col));
         }
 
         public int GetBoxIndex(int row, int col)
@@ -89,16 +100,14 @@ namespace sudoku.src.GameModel
         public void PlaceNumber(int row, int col, int num)
         {
             board[row, col] = num;
-            UpdateInternal(row, col, num);
+            UpdateInternalBoard(row, col, num, true);
         }
 
         public void RemoveNumber(int row, int col)
         {
-            int bit = 1 << board[row, col] - 1;
-            rows[row] &= ~bit;
-            cols[col] &= ~bit;
-            boxes[GetBoxIndex(row, col)] &= ~bit;
+            int num = board[row, col];
             board[row, col] = EmptyCell;
+            UpdateInternalBoard(row, col, num, false);
         }
 
         public IEnumerable<(int row, int col)> GetRowCells(int row)

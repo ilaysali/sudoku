@@ -2,6 +2,7 @@
 using sudoku.src.GameModel;
 using System;
 using System.Numerics;
+using sudoku.src.Utils;
 
 
 namespace sudoku.src.Algorithms
@@ -19,9 +20,9 @@ namespace sudoku.src.Algorithms
             {
                 int moves = board.GetValidMoves(row, col);
                 // If only one bit is set in moves, it means there's only one valid move for that cell
-                if (BitOperations.PopCount((uint)moves) == 1)
+                if (BitOperation.CountSetBits(moves) == 1)
                 {
-                    int val = BitOperations.TrailingZeroCount(moves) + 1;
+                    int val = BitOperation.ToDigit(moves);
                     toFill.Add((row, col, val));
                 }
             }
@@ -39,7 +40,8 @@ namespace sudoku.src.Algorithms
                 }
             }
 
-            if (changed) board.UpdateEmptyCellsList();
+            if (changed)
+                board.UpdateEmptyCellsList();
             return changed;
         }
     }

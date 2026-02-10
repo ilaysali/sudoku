@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Numerics;
+using sudoku.src.Utils;
 
 
 namespace sudoku.src.Algorithms
@@ -21,8 +22,8 @@ namespace sudoku.src.Algorithms
 
             while (moves > 0)
             {
-                int move = moves & -moves; // Get the lowest set bit
-                int number = BitOperations.TrailingZeroCount(move) + 1;
+                int move = BitOperation.GetLowestSetBit(moves); // Get the lowest set bit
+                int number = BitOperation.ToDigit(move);
 
                 board.PlaceNumber(row, col, number);
 
@@ -30,7 +31,7 @@ namespace sudoku.src.Algorithms
                     return true;
 
                 board.RemoveNumber(row, col);
-                moves &= ~move; // Remove the bit we just tried
+                moves = BitOperation.RemoveBit(moves, move); // Remove the bit we just tried
             }
             return false;
         }
