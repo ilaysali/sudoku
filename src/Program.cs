@@ -14,9 +14,16 @@ namespace sudoku.src
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("press 1 if you want to enter sudoku board else press any number to run DB sudokus");
-            int choice = int.Parse(Console.ReadLine());
-            if (choice == 1)
+            Console.WriteLine("press 1 if you want to enter sudoku board else press any key to run DB sudokus");
+            string choice = Console.ReadLine();
+
+            // Check if the user pressed Ctrl+D (EOF)
+            if (choice == null || choice == "\u0004")
+            {
+                return;
+            }
+
+            if (choice == "1")
                 new SudokuGame();
             else
             {
