@@ -1,7 +1,5 @@
 ﻿using sudoku.src.GameModel;
 using System;
-using System.Numerics;
-using static sudoku.src.GameModel.Constants;
 
 
 namespace sudoku.src.Algorithms
