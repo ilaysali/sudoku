@@ -14,6 +14,12 @@ namespace sudoku.src.Exceptions
         public InvalidUserInputException(string message) : base(message) { }
     }
 
+    // Exception for trying to place a number in a cell that is already occupied
+    public class CellOccupiedException : SudokuException
+    {
+        public CellOccupiedException(string message) : base(message) { }
+    }
+
     // Exception for unsolvable boards, such as when the input board has contradictions
     public class UnsolvableBoardException : SudokuException
     {
