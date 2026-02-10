@@ -1,11 +1,12 @@
-﻿using System;
+﻿using sudoku.src.GameModel;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
-using static sudoku.Constants;
+using static sudoku.src.GameModel.Constants;
 
 
-namespace sudoku
+namespace sudoku.src.Algorithms
 {
     public static class Solver
     {

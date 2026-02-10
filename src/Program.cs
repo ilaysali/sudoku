@@ -1,11 +1,14 @@
-﻿using System;
+﻿using sudoku.src.FileHandling;
+using sudoku.src.UI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace sudoku
+
+namespace sudoku.src
 {
     class Program
     {
@@ -17,7 +20,7 @@ namespace sudoku
                 new SudokuGame();
             else
             {
-                var bench = new DB();
+                var bench = new SudokuLoader();
                 bench.Run("top95.txt");
                 bench.Run("sudoku.csv", 100000);
             }

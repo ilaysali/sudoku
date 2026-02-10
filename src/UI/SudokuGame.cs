@@ -1,13 +1,14 @@
-﻿using System;
+﻿using sudoku.src.GameModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static sudoku.Constants;
-using static sudoku.Solver;
+using static sudoku.src.GameModel.Constants;
+using static sudoku.src.Algorithms.Solver;
 
-namespace sudoku
+namespace sudoku.src.UI
 {
     public class SudokuGame
     {

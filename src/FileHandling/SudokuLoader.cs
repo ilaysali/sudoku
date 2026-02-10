@@ -1,14 +1,16 @@
-﻿using System;
+﻿using sudoku.src.Algorithms;
+using sudoku.src.GameModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static sudoku.Constants;
+using static sudoku.src.GameModel.Constants;
 
-namespace sudoku
+namespace sudoku.src.FileHandling
 {
-    public class DB
+    public class SudokuLoader
     {
         public void Run(string fileName, int maxSudoku = -1)
         {
