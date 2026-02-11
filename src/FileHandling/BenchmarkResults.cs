@@ -17,13 +17,25 @@ namespace sudoku.src.FileHandling
 
             // Avoid division by zero
             double avgTimeMs = SolvedCount > 0 ? totalTimeMs / SolvedCount : 0;
+
             if (TargetCount == 0)
-                TargetCount = TotalCount; // Set target to total if not specified
+                TargetCount = TotalCount;
+
+            // Local helper function to format any millisecond value
+            string FormatTime(double ms)
+            {
+                // If the value is 100ms or more, convert to seconds
+                if (ms >= 100)
+                {
+                    return $"{(ms / 1000):F4}s";
+                }
+                return $"{ms:F4}ms";
+            }
 
             Console.WriteLine($"Progress: {TotalCount}/{TargetCount}, Solved: {SolvedCount}");
-            Console.WriteLine($" - Total Time: {totalTimeMs:F4}ms");
-            Console.WriteLine($" - Average:    {avgTimeMs:F4}ms");
-            Console.WriteLine($" - Slowest:    {MaxTimeMs:F4}ms");
+            Console.WriteLine($" - Total Time: {FormatTime(totalTimeMs)}");
+            Console.WriteLine($" - Average:    {FormatTime(avgTimeMs)}");
+            Console.WriteLine($" - Slowest:    {FormatTime(MaxTimeMs)}");
             Console.WriteLine("-------------------------------");
         }
     }
