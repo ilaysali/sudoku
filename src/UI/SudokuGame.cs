@@ -15,7 +15,8 @@ namespace sudoku.src.UI
             Console.WriteLine("Enter Sudoku Board");
             string initialBoard = Console.ReadLine() ?? string.Empty;
 
-            Size = (int)Math.Sqrt(initialBoard.Length);
+            UpdateSizes((int)Math.Sqrt(initialBoard.Length));
+
 
             ValidateBoardSize(initialBoard);
            

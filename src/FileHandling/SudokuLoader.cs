@@ -9,11 +9,12 @@ namespace sudoku.src.FileHandling
 {
     public class SudokuLoader
     {
+        private static readonly int size = 9;
         public void Run(string fileName, int maxSudoku = -1)
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             FileExists(filePath);
-            Constants.Size = 9; // Set the board size based on the expected input (e.g., 9 for 9x9 Sudoku)
+            Constants.UpdateSizes(size); // Set the board size based on the expected input (e.g., 9 for 9x9 Sudoku)
 
             BenchmarkResults results = new BenchmarkResults();
             if (maxSudoku > 0)

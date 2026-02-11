@@ -65,8 +65,8 @@ namespace sudoku.src.GameModel
 
         private void CheckValidPlacement(int row, int col, int boxIdx, int bit, bool enable)
         {
-             bool occupied = (rows[row] & bit) != 0 || (cols[col] & bit) != 0 || (boxes[boxIdx] & bit) != 0;
-             CanPlaceOrRemove(enable, occupied);
+            bool occupied = (rows[row] & bit) != 0 || (cols[col] & bit) != 0 || (boxes[boxIdx] & bit) != 0;
+            CanPlaceOrRemove(enable, occupied);
         }
 
         public void UpdateEmptyCellsList()
