@@ -2,6 +2,10 @@
 
 namespace sudoku.src.FileHandling
 {
+    /// <summary>
+    /// Handels performance metrics for a batch of Sudoku puzzles.
+    /// Tracks solve counts, execution time, and worst-case scenarios.
+    /// </summary>
     public class BenchmarkResults
     {
         public int TotalCount { get; set; }
@@ -10,6 +14,10 @@ namespace sudoku.src.FileHandling
         public double MaxTimeMs { get; set; }   
         public int TargetCount { get; set; }
 
+        /// <summary>
+        /// Outputs a summary of the benchmarking results to the console.
+        /// Includes total time, average time per puzzle, and the slowest solve time.
+        /// </summary>
         public void PrintSummary()
         {
             // Calculate total time from ticks

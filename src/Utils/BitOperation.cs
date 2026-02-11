@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Numerics;
 
-
 namespace sudoku.src.Utils
 {
+    /// <summary>
+    /// Provides high-performance bitwise utility functions.
+    /// Used to represent sets of Sudoku candidates as integer bitmasks.
+    /// </summary>
     public static class BitOperation
     {
         // Convert a digit (e.g., 5) to a bitmask (00010000)

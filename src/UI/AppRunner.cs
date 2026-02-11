@@ -4,10 +4,19 @@ using System;
 
 namespace sudoku.src.UI
 {
+    /// <summary>
+    /// Controls the main application flow, handling the menu loop and catching all errors.
+    /// Acts as the entry point for user interaction.
+    /// </summary>
     public class AppRunner
     {
         private bool _keepRunning = true;
 
+        /// <summary>
+        /// Executes the main application loop. 
+        /// Continually displays the menu and processes user input until an exit command is received.
+        /// Catches and reports exceptions.
+        /// </summary>
         public void Run()
         {
             while (_keepRunning)
@@ -46,6 +55,10 @@ namespace sudoku.src.UI
             return Console.ReadLine()?.ToLower().Trim();
         }
 
+        /// <summary>
+        /// Routes valid user inputs to the appropriate application logic (Game or Benchmark).
+        /// </summary>
+        /// <param name="choice">The raw input string from the user.</param>
         private void ProcessChoice(string choice)
         {
             if (string.IsNullOrEmpty(choice) || choice == "exit" || choice == "\u0004")
@@ -71,6 +84,9 @@ namespace sudoku.src.UI
             }
         }
 
+        /// <summary>
+        /// Instantiates the file loader to run benchmarks on datasets.
+        /// </summary>
         private void RunBenchmarks()
         {
             var bench = new SudokuLoader();

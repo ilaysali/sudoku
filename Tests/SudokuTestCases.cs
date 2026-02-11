@@ -2,6 +2,10 @@
 
 namespace sudoku.Tests
 {
+    /// <summary>
+    /// A centralized repository of test data strings representing various Sudoku board states.
+    /// used to supply scenarios for unit and tests.
+    /// </summary>
     public static class SudokuTestCases
     {
         // Valid Sudoku boards
@@ -17,6 +21,8 @@ namespace sudoku.Tests
         // Unsolvable Sudoku board an empty cell with no valid candidates due to row and column constraints No Immediate contradiction
         public const string ValidButUnsolvable = "12345678.........9...............................................................";
 
+        /// Provides a collection of invalid length inputs for parameterized testing.
+        /// Includes empty strings, short strings, and strings that barely miss the required length.
         public static IEnumerable<object[]> GetInvalidLengthCases()
         {
             yield return new object[] { "" };

@@ -1,16 +1,24 @@
 ﻿using sudoku.src.GameModel;
 using System;
-using System.Drawing;
-using System.Numerics;
 using sudoku.src.Utils;
 
 
 namespace sudoku.src.Algorithms
 {
+    /// <summary>
+    /// Provides a recursive backtracking algorithm optimized with the Minimum Remaining Values (MRV) heuristic.
+    /// </summary>
     public static class BackTracking
     {
+        /// <summary>
+        /// Recursively attempts to solve the board by placing valid numbers into empty cells.
+        /// </summary>
+        /// <param name="board">The board state to solve.</param>
+        /// <param name="index">The current index within the board's EmptyCells list being processed.</param>
+        /// <returns>True if a solution is found, otherwise false.</returns>
         public static bool BackTrackingAlgorithm(SudokuBoard board, int index)
         {
+            // If we've processed all empty cells, the board is solved.
             if (index >= board.EmptyCells.Count)
                 return true;
 
@@ -27,6 +35,7 @@ namespace sudoku.src.Algorithms
 
                 board.PlaceNumber(row, col, number);
 
+                // Recurse to the next cell
                 if (BackTrackingAlgorithm(board, index + 1))
                     return true;
 
@@ -35,6 +44,11 @@ namespace sudoku.src.Algorithms
             }
             return false;
         }
+
+        /// <summary>
+        /// Applies the Minimum Remaining Values (MRV) heuristic.
+        /// Scans the remaining empty cells to find the one with the fewest valid moves and swaps it to the current index.
+        /// </summary>
         private static void MRV(SudokuBoard board, int index)
         {
             // Look ahead in the list to find the cell with the fewest moves

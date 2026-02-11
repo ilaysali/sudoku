@@ -7,9 +7,19 @@ using System.Diagnostics;
 
 namespace sudoku.src.FileHandling
 {
+    /// <summary>
+    /// Handels the loading and solving of Sudoku puzzles from external files.
+    /// </summary>
     public class SudokuLoader
     {
         private static readonly int size = 9;
+
+        /// <summary>
+        /// Reads a file line-by-line, parses valid Sudoku strings, and attempts to solve them.
+        /// Reports progress and final benchmarks to the console.
+        /// </summary>
+        /// <param name="fileName">The name of the file containing Sudoku puzzles.</param>
+        /// <param name="maxSudoku">Optional limit on the number of puzzles to process. Defaults to -1 (all).</param>
         public void Run(string fileName, int maxSudoku = -1)
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
@@ -56,6 +66,9 @@ namespace sudoku.src.FileHandling
             results.PrintSummary();
         }
 
+        /// <summary>
+        /// Updates the shared benchmark results.
+        /// </summary>
         private void UpdateResults(BenchmarkResults res, Stopwatch sw)
         {
             res.SolvedCount++;

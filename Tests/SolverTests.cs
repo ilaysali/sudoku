@@ -7,6 +7,10 @@ using Xunit;
 
 namespace sudoku.Tests
 {
+    /// <summary>
+    /// Tests for the Sudoku solver logic.
+    /// Verifies behavior across valid, invalid, and unsolvable board configurations.
+    /// </summary>
     public class SolverTests
     {
         [Fact]
@@ -37,7 +41,8 @@ namespace sudoku.Tests
             bool result = Solver.Solve(board);
 
             Assert.True(result);
-            Assert.True(board.IsFull(), "Board should be full after solving");
+            board.UpdateEmptyCellsList(); // Ensure the list of empty cells is updated after solving
+            Assert.True(board.EmptyCells.Count() == 0, "Board should be full after solving");
         }
     }
 }
