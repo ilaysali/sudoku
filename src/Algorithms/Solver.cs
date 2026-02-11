@@ -6,23 +6,22 @@ namespace sudoku.src.Algorithms
 {
     public static class Solver
     {
-        // Solvind strategies list for easy extensibility in the future
-        private static readonly List<ISolvingStrategy> _strategies = new List<ISolvingStrategy>
-        {
-            // Applies logic (Naked/Hidden Singles)
-            new NakedSingles(),
-            new HiddenSingles()
-        };
-
         public static bool Solve(SudokuBoard board)
         {
+            // Solvind strategies list for easy extensibility in the future
+            var strategies = new List<ISolvingStrategy>
+            {
+                new NakedSingles(),
+                new HiddenSingles()
+            };
+
             bool changed = true;
             while (changed)
             {
                 changed = false;
 
                 // Iterate through all strategies
-                foreach (var strategy in _strategies)
+                foreach (var strategy in strategies)
                 {
                     if (strategy.Apply(board))
                     {
