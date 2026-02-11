@@ -2,7 +2,6 @@
 using sudoku.src.GameModel;
 using sudoku.src.Utils;
 using System;
-using System.Numerics;
 
 
 
@@ -11,6 +10,15 @@ namespace sudoku.src.Algorithms
     public class HiddenSingles : ISolvingStrategy
     {
         public string StrategyName => "Hidden Singles";
+
+        private readonly int[] _counts;
+        private readonly (int row, int col)[] _lastPos;
+
+        public HiddenSingles()
+        {
+            _counts = new int[Constants.Size + 1];
+            _lastPos = new (int, int)[Constants.Size + 1];
+        }
 
         public bool Apply(SudokuBoard board)
         {
@@ -29,8 +37,7 @@ namespace sudoku.src.Algorithms
 
         private bool FindAndFillHiddenSingle(SudokuBoard board, IEnumerable<(int row, int col)> unitCells)
         {
-            int[] counts = new int[Constants.Size + 1];
-            (int row, int col)[] lastPos = new (int, int)[Constants.Size + 1];
+            Array.Clear(_counts, 0, _counts.Length);
 
             foreach (var (row, col) in unitCells)
             {
@@ -41,8 +48,8 @@ namespace sudoku.src.Algorithms
                 {
                     int bit = BitOperation.GetLowestSetBit(moves);
                     int num = BitOperation.ToDigit(bit);
-                    counts[num]++;
-                    lastPos[num] = (row, col);
+                    _counts[num]++;
+                    _lastPos[num] = (row, col);
                     moves = BitOperation.RemoveBit(moves, bit);
                 }
             }
@@ -50,9 +57,9 @@ namespace sudoku.src.Algorithms
             bool localChange = false;
             for (int num = 1; num <= Constants.Size; num++)
             {
-                if (counts[num] == 1)
+                if (_counts[num] == 1)
                 {
-                    var (row, col) = lastPos[num];
+                    var (row, col) = _lastPos[num];
                     if (board.IsEmpty(row, col))
                     {
                         board.PlaceNumber(row, col, num);
