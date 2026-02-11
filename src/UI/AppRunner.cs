@@ -23,7 +23,11 @@ namespace sudoku.src.UI
                     Console.WriteLine($"\nError: {ex.Message}");
                     WaitForUser();
                 }
-
+                catch (Exception ex)
+                {
+                        Console.WriteLine($"\nUnexpected error: {ex.Message}");
+                        WaitForUser();
+                }
             }
         }
 
