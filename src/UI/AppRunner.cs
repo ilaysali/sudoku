@@ -71,7 +71,7 @@ namespace sudoku.src.UI
         {
             var bench = new SudokuLoader();
             bench.Run("data/top95.txt");
-            bench.Run("data/sudoku.csv", 300000);
+            bench.Run("data/sudoku.csv", 150000);
         }
 
         private void WaitForUser()

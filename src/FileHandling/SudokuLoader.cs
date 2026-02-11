@@ -15,27 +15,43 @@ namespace sudoku.src.FileHandling
                 throw new SudokuFileNotFoundException(filePath);
 
             BenchmarkResults results = new BenchmarkResults();
+            if (maxSudoku > 0)
+                results.TargetCount = maxSudoku;
             var sw = new Stopwatch();
+
+            Console.WriteLine($"\nResults for {fileName}:");
 
             foreach (var line in File.ReadLines(filePath))
             {
-                // Filtering out invalid lines and checking max count before parsing
-                string sudokuStr = SudokuParser.ExtractString(line);
-                if (sudokuStr == null || (maxSudoku > 0 && results.TotalCount >= maxSudoku))
+                // Stop if we've reached the user-defined limit
+                if (maxSudoku > 0 && results.TotalCount >= maxSudoku)
+                    break;
+                try
+                {
+                    // Filtering out invalid lines and checking max count before parsing
+                    string sudokuStr = SudokuParser.ExtractString(line);
+
+                    if (results.TotalCount % 50000 == 0 && results.TotalCount > 0)
+                        results.PrintSummary();
+
+                    results.TotalCount++;
+
+                    // Convert the string to a 2D array and initialize the board
+                    var board = new SudokuBoard(SudokuParser.ToArray(sudokuStr));
+
+                    sw.Restart();
+                    bool solved = Solver.Solve(board);
+                    sw.Stop();
+
+                    if (solved) UpdateResults(results, sw);
+                }
+                catch (InvalidUserInputException)
+                {
+                    // Skip invalid lines without crashing the entire process
                     continue;
-
-                results.TotalCount++;
-
-                // Convert the string to a 2D array and initialize the board
-                var board = new SudokuBoard(SudokuParser.ToArray(sudokuStr));
-
-                sw.Restart();
-                bool solved = Solver.Solve(board);
-                sw.Stop();
-
-                if (solved) UpdateResults(results, sw);
+                }
             }
-            results.PrintSummary(fileName);
+            results.PrintSummary();
         }
 
         private void UpdateResults(BenchmarkResults res, Stopwatch sw)
