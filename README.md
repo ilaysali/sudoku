@@ -4,15 +4,15 @@
 The project implements a modular architecture to handle puzzle loading, validation, testing, and solving using both heuristic logic and backtracking algorithms.
 
 ## Key Features
-* **Hybrid Solving Engine: Combines human-like logic (NakedSingles, HiddenSingles) with a Backtracking algorithm using the Strategy Pattern.
+* **Hybrid Solving Engine:** Combines human-like logic (NakedSingles, HiddenSingles) with a Backtracking algorithm using the Strategy Pattern.
 
-* **Bitwise Optimization: Utilizes low-level bit operations to manage board candidates efficiently, drastically reducing memory usage and processing time.
+* **Bitwise Optimization:** Utilizes low-level bit operations to manage board candidates efficiently, drastically reducing memory usage and processing time.
 
-* **Versatile Input Handling: Capable of parsing and loading puzzles from various formats including CSV and TXT files.
+* **Versatile Input Handling:** Capable of parsing and loading puzzles from various formats including CSV and TXT files.
 
-* **Robust Validation: Includes a dedicated validation layer to ensure board integrity and legal moves at every step.
+* **Robust Validation:** Includes a dedicated validation layer to ensure board integrity and legal moves at every step.
 
-* **Benchmarking: Built-in tools to measure and analyze solving performance across multiple difficulty levels.
+* **Benchmarking:** Built-in tools to measure and analyze solving performance across multiple difficulty levels.
 
 ## Project Structure
 * `Program.cs`: Entry point and main execution flow.
