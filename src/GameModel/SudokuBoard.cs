@@ -87,6 +87,19 @@ namespace sudoku.src.GameModel
             return board[row, col] == EmptyCell;
         }
 
+        public bool IsFull()
+        {
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    if (board[i, j] == EmptyCell)
+                        return false;
+                }
+            }
+            return true;
+        }
+
         public int GetValidMoves(int row, int col)
         {
             int fullMask = BitOperation.FullMask(Size);
