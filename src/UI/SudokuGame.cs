@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using static sudoku.src.GameModel.Constants;
 using static sudoku.src.Algorithms.Solver;
+using static sudoku.src.Validation.Validator;
 using sudoku.src.Exceptions;
 
 namespace sudoku.src.UI
@@ -13,10 +14,11 @@ namespace sudoku.src.UI
         {
             Console.WriteLine("Enter Sudoku Board");
             string initialBoard = Console.ReadLine() ?? string.Empty;
-            Size = (int)Math.Sqrt(initialBoard.Length);
-            if (initialBoard.Length != Size * Size)
-                throw new InvalidUserInputException("Invalid board input length.");
 
+            Size = (int)Math.Sqrt(initialBoard.Length);
+
+            ValidateBoardSize(initialBoard);
+           
             int[,] Board = new int[Size, Size];
             for (int i = 0; i < Size; i++)
             {
@@ -24,8 +26,7 @@ namespace sudoku.src.UI
                 {
                     char c = initialBoard[i * Size + j];
 
-                    if (!char.IsLetter(c) && !char.IsDigit(c))
-                        throw new InvalidUserInputException("Invalid board input character.");
+                    ValidateCharacters(c);
 
                     Board[i, j] = ConvertCharToInt(char.ToLower(c));
                 }

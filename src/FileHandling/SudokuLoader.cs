@@ -1,6 +1,7 @@
 ﻿using sudoku.src.Algorithms;
 using sudoku.src.GameModel;
 using sudoku.src.Exceptions;
+using static sudoku.src.Validation.Validator;
 using System;
 using System.Diagnostics;
 
@@ -11,8 +12,8 @@ namespace sudoku.src.FileHandling
         public void Run(string fileName, int maxSudoku = -1)
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            if (!File.Exists(filePath))
-                throw new SudokuFileNotFoundException(filePath);
+            FileExists(filePath);
+            Constants.Size = 9; // Set the board size based on the expected input (e.g., 9 for 9x9 Sudoku)
 
             BenchmarkResults results = new BenchmarkResults();
             if (maxSudoku > 0)

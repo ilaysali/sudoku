@@ -1,5 +1,6 @@
 ﻿using System;
 using static sudoku.src.GameModel.Constants;
+using static sudoku.src.Validation.Validator;
 using sudoku.src.Exceptions;
 
 namespace sudoku.src.FileHandling
@@ -15,8 +16,7 @@ namespace sudoku.src.FileHandling
 
             // Validate length and skip headers (e.g., "quiz1", "quiz2", etc.)
             if (clean.Length != Size * Size || clean.StartsWith("quiz"))
-                throw new InvalidUserInputException($"Invalid Sudoku string: '{line}'");
-
+                throw new InvalidUserInputException($"Invalid Sudoku string length or header detected: '{line}'");
             return clean;
         }
 
@@ -28,7 +28,8 @@ namespace sudoku.src.FileHandling
                 for (int j = 0; j < Size; j++)
                 {
                     char c = sudokuStr[i * Size + j];
-                    board[i, j] = (c >= '0' && c <= '9') ? c - '0' : c - 'a';
+                    
+                    board[i, j] = CalculateInput(c);
                 }
             }
             return board;

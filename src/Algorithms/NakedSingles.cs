@@ -28,15 +28,8 @@ namespace sudoku.src.Algorithms
 
             foreach (var (row, col, val) in toFill)
             {
-                if (board.IsEmpty(row, col))
-                {
-                    board.PlaceNumber(row, col, val);
-                    changed = true;
-                }
-                else
-                {
-                    throw new CellOccupiedException($"cell ({row}, {col}) already occupied");
-                }
+                board.PlaceNumber(row, col, val);
+                changed = true;
             }
 
             if (changed)

@@ -4,6 +4,7 @@ using System;
 using System.Numerics;
 using static sudoku.src.GameModel.Constants;
 using sudoku.src.Utils;
+using static sudoku.src.Validation.Validator;
 
 namespace sudoku.src.GameModel
 {
@@ -45,6 +46,7 @@ namespace sudoku.src.GameModel
         {
             int bit = BitOperation.FromDigit(num);
             int boxIdx = GetBoxIndex(row, col);
+            CheckValidPlacement(row, col, boxIdx, bit, enable);
             if (enable)
             {
                 // Add the bit for the number in the corresponding row, column, and box
@@ -59,6 +61,12 @@ namespace sudoku.src.GameModel
                 cols[col] &= ~bit;
                 boxes[boxIdx] &= ~bit;
             }
+        }
+
+        private void CheckValidPlacement(int row, int col, int boxIdx, int bit, bool enable)
+        {
+             bool occupied = (rows[row] & bit) != 0 || (cols[col] & bit) != 0 || (boxes[boxIdx] & bit) != 0;
+             CanPlaceOrRemove(enable, occupied);
         }
 
         public void UpdateEmptyCellsList()

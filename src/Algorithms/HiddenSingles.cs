@@ -60,15 +60,8 @@ namespace sudoku.src.Algorithms
                 if (_counts[num] == 1)
                 {
                     var (row, col) = _lastPos[num];
-                    if (board.IsEmpty(row, col))
-                    {
-                        board.PlaceNumber(row, col, num);
-                        localChange = true;
-                    }
-                    else
-                    {
-                        throw new CellOccupiedException($"cell ({row}, {col}) already occupied");
-                    }
+                    board.PlaceNumber(row, col, num);
+                    localChange = true;
                 }
             }
             return localChange;
